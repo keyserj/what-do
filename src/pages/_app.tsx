@@ -3,7 +3,13 @@ import { StyledEngineProvider, ThemeProvider, createTheme } from "@mui/material/
 import type { AppProps } from "next/app";
 import Head from "next/head";
 
+import { Roboto } from "next/font/google";
 import "@/styles/globals.css";
+
+const roboto = Roboto({
+  weight: ["300", "400", "500", "700"],
+  subsets: ["latin"],
+});
 
 export default function App({ Component, pageProps }: AppProps) {
   const theme = createTheme({
@@ -37,7 +43,11 @@ export default function App({ Component, pageProps }: AppProps) {
       <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <Component {...pageProps} />
+          <main
+            className={`${roboto.className} flex items-center justify-center h-svh w-svw bg-[#91FF69]`}
+          >
+            <Component {...pageProps} />
+          </main>
         </ThemeProvider>
       </StyledEngineProvider>
     </>
