@@ -1,45 +1,8 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
-
-interface StoreState {
-  states: { name: string; active: boolean }[];
-  actions: {
-    /**
-     * string of state - when that state is active, show this action
-     */
-    condition?: string;
-    action: string;
-    passed: boolean;
-  }[];
-  motivations: { text: string; passed: boolean }[];
-}
-
-const initialState: StoreState = {
-  states: [{ name: "lack of sleep", active: false }],
-  actions: [{ condition: "lack of sleep", action: "Take a nap.", passed: false }],
-  motivations: [{ text: "Sleep is important for your health.", passed: false }],
-};
-
-const persistName = "what-do-storage";
-
-const useStore = create<StoreState>()(
-  persist(() => initialState, {
-    name: persistName,
-    skipHydration: true, // manually hydrate so we can show a loading state
-  })
-);
+import { useStore } from "@/store/store";
 
 // hooks
 export const useStates = () => {
   return useStore((state) => state.states);
-};
-
-export const useActions = () => {
-  return useStore((state) => state.actions);
-};
-
-export const useMotivations = () => {
-  return useStore((state) => state.motivations);
 };
 
 // actions
@@ -127,13 +90,4 @@ export const resetStates = () => {
   });
 
   useStore.setState({ states: newStates });
-};
-
-// utils
-export const loadFromStorage = async () => {
-  if (useStore.persist.getOptions().storage?.getItem(persistName)) {
-    await useStore.persist.rehydrate();
-  } else {
-    useStore.setState(initialState);
-  }
 };

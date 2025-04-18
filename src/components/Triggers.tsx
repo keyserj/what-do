@@ -1,18 +1,9 @@
 import {
-  addState,
-  deleteState,
-  moveState,
-  resetStates,
-  setStateText,
-  toggleState,
-  useStates,
-} from "@/store/states";
-import {
+  Checkbox,
   IconButton,
   List,
   ListItem,
   ListItemText,
-  Switch,
   TextField,
   Typography,
 } from "@mui/material";
@@ -23,61 +14,68 @@ import {
   Edit,
   KeyboardDoubleArrowDown,
   KeyboardDoubleArrowUp,
-  Refresh,
 } from "@mui/icons-material";
 import { useState } from "react";
 import { motion } from "motion/react";
+import {
+  addTrigger,
+  deleteTrigger,
+  moveTrigger,
+  setTriggerText,
+  toggleTrigger,
+  useTriggers,
+} from "@/store/triggers";
 
 interface Props {
   next: () => void;
 }
 
-export const States = ({ next }: Props) => {
+export const Triggers = ({ next }: Props) => {
   const [editing, setEditing] = useState(false);
 
-  const states = useStates();
+  const triggers = useTriggers();
 
   return (
     <div className="size-full flex flex-col">
       {/* body */}
       <div className="flex flex-col grow w-full items-center justify-center">
         <Typography variant="h1" className="!text-3xl !font-normal !mb-2">
-          What Am
+          Why Did
         </Typography>
 
         <List>
           {!editing &&
-            states.map((state, index) => (
-              <ListItem key={index} className="h-14" onClick={() => toggleState(index)}>
-                <ListItemText primary={state.name} />
-                <Switch checked={state.active} />
+            triggers.map((trigger, index) => (
+              <ListItem key={index} className="h-14" onClick={() => toggleTrigger(index)}>
+                <ListItemText primary={trigger.name} />
+                <Checkbox checked={trigger.active} />
               </ListItem>
             ))}
           {editing && (
             <>
-              {states.map((state, index) => (
+              {triggers.map((trigger, index) => (
                 // will break if state name isn't unique, but it should be
-                <ListItem key={state.name} component={motion.li} layout>
+                <ListItem key={trigger.name} component={motion.li} layout>
                   <IconButton
                     color="primary"
                     title="Move up"
-                    onClick={() => moveState(index, "up")}
+                    onClick={() => moveTrigger(index, "up")}
                   >
                     <KeyboardDoubleArrowUp />
                   </IconButton>
                   <IconButton
                     color="primary"
                     title="Move down"
-                    onClick={() => moveState(index, "down")}
+                    onClick={() => moveTrigger(index, "down")}
                   >
                     <KeyboardDoubleArrowDown />
                   </IconButton>
                   <TextField
                     size="small"
-                    value={state.name}
-                    onChange={(event) => setStateText(index, event.target.value)}
+                    value={trigger.name}
+                    onChange={(event) => setTriggerText(index, event.target.value)}
                   />
-                  <IconButton color="primary" title="Delete" onClick={() => deleteState(index)}>
+                  <IconButton color="primary" title="Delete" onClick={() => deleteTrigger(index)}>
                     <Delete />
                   </IconButton>
                 </ListItem>
@@ -91,10 +89,10 @@ export const States = ({ next }: Props) => {
                 </IconButton>
                 <TextField
                   size="small"
-                  placeholder="Add a new state"
+                  placeholder="Add a new trigger"
                   onBlur={(event) => {
                     if (!event.target.value) return;
-                    addState(event.target.value);
+                    addTrigger(event.target.value);
                     event.target.value = "";
                   }}
                 />
@@ -112,11 +110,8 @@ export const States = ({ next }: Props) => {
 
       {/* footer */}
       <div className="w-full flex justify-center h-12">
-        <IconButton color="primary" title="Reset states" onClick={() => resetStates()}>
-          <Refresh />
-        </IconButton>
         {!editing && (
-          <IconButton color="primary" title="Edit states" onClick={() => setEditing(!editing)}>
+          <IconButton color="primary" title="Edit triggers" onClick={() => setEditing(!editing)}>
             <Edit />
           </IconButton>
         )}
