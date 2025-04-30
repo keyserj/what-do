@@ -7,8 +7,9 @@ import favicon from "@/../public/favicon-96x96.png";
 import { Link } from "@mui/material";
 import { Motivations } from "@/components/Motivations";
 import { Triggers } from "@/components/Triggers";
+import { Finale } from "@/components/Finale";
 
-type View = "triggers" | "states" | "actions" | "motivations";
+type View = "triggers" | "states" | "actions" | "motivations" | "finale";
 
 const startupDelay = 10000; // force you to take a deep breath
 // const startupDelay = 1000; // debugging
@@ -81,11 +82,13 @@ export default function Home() {
         {view === "triggers" ? (
           <Triggers next={() => setView("states")} />
         ) : view === "states" ? (
-          <States next={() => setView("actions")} />
+          <States next={() => setView("finale")} />
         ) : view === "actions" ? (
           <Actions />
-        ) : (
+        ) : view === "motivations" ? (
           <Motivations />
+        ) : (
+          <Finale />
         )}
       </div>
     </div>
