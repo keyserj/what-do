@@ -10,7 +10,10 @@ export const useCurrentAndNextActions = () => {
 
       const nextAction = getCurrentAction({
         ...state,
-        actions: state.actions.filter((action) => action.action !== currentAction.action),
+        actions: state.actions.filter(
+          (action) =>
+            action.condition !== currentAction.condition || action.action !== currentAction.action
+        ),
       });
 
       return { currentAction, nextAction };

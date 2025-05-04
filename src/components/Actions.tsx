@@ -107,7 +107,7 @@ const EditingActions = () => {
             </TextField>
             <Link
               component="button"
-              className="text-sm grow whitespace-nowrap overflow-hidden text-ellipsis"
+              className="text-sm grow whitespace-nowrap overflow-hidden text-ellipsis text-left"
               onClick={() => setEditingActionIndex(index)}
             >
               {action.action}

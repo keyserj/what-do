@@ -86,7 +86,7 @@ export default function Home() {
         ) : view === "actions" ? (
           <Actions next={() => setView("finale")} />
         ) : view === "motivations" ? (
-          <Motivations />
+          <Motivations next={() => setView("finale")} />
         ) : (
           <Finale />
         )}
