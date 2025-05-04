@@ -1,3 +1,4 @@
+import JSONCrush from "jsoncrush";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
@@ -54,4 +55,28 @@ export const loadFromStorage = async () => {
   } else {
     useStore.setState(initialState);
   }
+};
+
+export const loadFromUrl = async (encodedState: string) => {
+  if (encodedState) {
+    const decoded = decodeURIComponent(encodedState);
+    const uncrushed = JSONCrush.uncrush(decoded);
+    useStore.setState(JSON.parse(uncrushed));
+  } else {
+    useStore.setState(initialState);
+  }
+};
+
+export const buildUrlFromState = async () => {
+  const state = useStore.getState();
+
+  // seems like JSONCrush is pretty good for compression... gzip is close? but logic for that is annoying
+  const crushed = JSONCrush.crush(JSON.stringify(state));
+
+  const uriEncoded = encodeURIComponent(crushed);
+
+  const url = new URL(window.location.href);
+  url.searchParams.set("settings", uriEncoded);
+
+  return url.toString();
 };

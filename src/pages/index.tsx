@@ -1,6 +1,6 @@
 import { Actions } from "@/components/Actions";
 import { States } from "@/components/States";
-import { loadFromStorage } from "@/store/store";
+import { buildUrlFromState, loadFromStorage, loadFromUrl } from "@/store/store";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import favicon from "@/../public/favicon-96x96.png";
@@ -25,7 +25,11 @@ export default function Home() {
     }, startupDelay);
 
     const load = async () => {
-      await loadFromStorage();
+      const url = new URL(window.location.href);
+      const stateString = url.searchParams.get("settings");
+      if (stateString) await loadFromUrl(stateString);
+      else await loadFromStorage();
+
       setLoaded(true);
     };
 
@@ -40,7 +44,18 @@ export default function Home() {
     <div className="size-full flex flex-col">
       {/* header */}
       <div className="w-full flex justify-between p-2 h-12">
-        <Image src={favicon} alt="home" height={32} width={32} />
+        <Image
+          src={favicon}
+          alt="home"
+          height={32}
+          width={32}
+          onClick={async () => {
+            const settingsUrl = await buildUrlFromState();
+            navigator.clipboard.writeText(settingsUrl);
+            alert("Settings link copied to clipboard: " + settingsUrl); // annoying that this isn't copy-pastable in chrome, not sure how to fix that
+          }}
+          className="cursor-pointer"
+        />
 
         <div className="flex gap-3">
           <Link
