@@ -38,12 +38,12 @@ export const Triggers = ({ next }: Props) => {
   return (
     <div className="size-full flex flex-col">
       {/* body */}
-      <div className="flex flex-col grow w-full items-center justify-center">
+      <div className="flex flex-col grow w-full items-center justify-center min-h-0">
         <Typography variant="h1" className="!text-3xl !font-normal !mb-2">
           Why Did
         </Typography>
 
-        <List>
+        <List className="min-h-0 overflow-auto">
           {!editing &&
             triggers.map((trigger, index) => (
               <ListItem key={index} className="h-14" onClick={() => toggleTrigger(index)}>

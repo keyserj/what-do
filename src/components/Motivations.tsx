@@ -66,7 +66,7 @@ const EditingMotivations = () => {
       <Typography variant="h1" className="!text-3xl !font-normal !mb-2">
         Why Do
       </Typography>
-      <List className="w-full">
+      <List className="w-full min-h-0 overflow-auto">
         {motivations.map((motivation, index) => (
           <ListItem
             // will break if text isn't unique, but it should be
@@ -147,7 +147,7 @@ export const Motivations = ({ next }: Props) => {
   return (
     <div className="size-full flex flex-col text-center">
       {/* body */}
-      <div className="flex flex-col grow w-full items-center justify-center">
+      <div className="flex flex-col grow w-full items-center justify-center min-h-0">
         {!editing && <CurrentMotivation next={next} />}
         {editing && <EditingMotivations />}
       </div>

@@ -73,7 +73,7 @@ const EditingActions = () => {
       <Typography variant="h1" className="!text-3xl !font-normal !mb-2">
         What Do
       </Typography>
-      <List className="w-full">
+      <List className="w-full min-h-0 overflow-auto">
         {actions.map((action, index) => (
           <ListItem
             // Will break if name isn't unique, but it should be.
@@ -182,7 +182,7 @@ export const Actions = ({ next }: Props) => {
   return (
     <div className="size-full flex flex-col text-center">
       {/* body */}
-      <div className="flex flex-col grow w-full items-center justify-center">
+      <div className="flex flex-col grow w-full items-center justify-center min-h-0">
         {!editing && <CurrentAction next={next} />}
         {editing && <EditingActions />}
       </div>
