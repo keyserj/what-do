@@ -93,7 +93,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="w-full grow p-2 min-h-0">
+      <div className="w-full grow p-3 min-h-0">
         {view === "triggers" ? (
           <Triggers next={() => setView("states")} />
         ) : view === "states" ? (
