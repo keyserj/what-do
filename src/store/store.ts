@@ -43,7 +43,8 @@ export const useStore = create<StoreState>()(
       states: state.states,
       // exclude action passed because user should re-see these each time they open the app
       actions: state.actions.map((action) => ({ ...action, passed: false })),
-      motivations: state.motivations,
+      // exclude motivation passed because user should re-see these each time they open the app
+      motivations: state.motivations.map((motivation) => ({ ...motivation, passed: false })),
     }),
   })
 );
