@@ -11,8 +11,8 @@ import { Finale } from "@/components/Finale";
 
 type View = "triggers" | "states" | "actions" | "motivations" | "finale";
 
-const startupDelay = 10000; // force you to take a deep breath
-// const startupDelay = 1000; // debugging
+// const startupDelay = 10000; // force you to take a deep breath
+const startupDelay = 1000; // debugging
 
 export default function Home() {
   const [view, setView] = useState<View>("triggers");
@@ -78,13 +78,13 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="w-full grow">
+      <div className="w-full grow p-2">
         {view === "triggers" ? (
           <Triggers next={() => setView("states")} />
         ) : view === "states" ? (
-          <States next={() => setView("finale")} />
+          <States next={() => setView("actions")} />
         ) : view === "actions" ? (
-          <Actions />
+          <Actions next={() => setView("finale")} />
         ) : view === "motivations" ? (
           <Motivations />
         ) : (

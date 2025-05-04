@@ -6,7 +6,7 @@ interface Condition {
   active: boolean;
 }
 
-interface StoreState {
+export interface StoreState {
   triggers: Condition[];
   states: Condition[];
   actions: {
@@ -23,7 +23,10 @@ interface StoreState {
 const initialState: StoreState = {
   triggers: [{ name: "procrastinating", active: false }],
   states: [{ name: "lack of sleep", active: false }],
-  actions: [{ condition: "lack of sleep", action: "Take a nap.", passed: false }],
+  actions: [
+    { condition: "lack of sleep", action: "Take a nap.", passed: false },
+    { action: "Go to bed.", passed: false },
+  ],
   motivations: [{ text: "Sleep is important for your health.", passed: false }],
 };
 
@@ -35,9 +38,10 @@ export const useStore = create<StoreState>()(
     skipHydration: true, // manually hydrate so we can show a loading state
     partialize: (state) => ({
       // exclude trigger active because user should be re-setting these each time they open the app
-      triggers: state.triggers.map((trigger) => ({ name: trigger.name, active: false })),
+      triggers: state.triggers.map((trigger) => ({ ...trigger, active: false })),
       states: state.states,
-      actions: state.actions,
+      // exclude action passed because user should re-see these each time they open the app
+      actions: state.actions.map((action) => ({ ...action, passed: false })),
       motivations: state.motivations,
     }),
   })

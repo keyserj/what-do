@@ -54,7 +54,7 @@ export const Triggers = ({ next }: Props) => {
           {editing && (
             <>
               {triggers.map((trigger, index) => (
-                // will break if state name isn't unique, but it should be
+                // will break if name isn't unique, but it should be
                 <ListItem key={trigger.name} component={motion.li} layout>
                   <IconButton
                     color="primary"

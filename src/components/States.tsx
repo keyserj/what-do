@@ -56,7 +56,7 @@ export const States = ({ next }: Props) => {
           {editing && (
             <>
               {states.map((state, index) => (
-                // will break if state name isn't unique, but it should be
+                // will break if name isn't unique, but it should be
                 <ListItem key={state.name} component={motion.li} layout>
                   <IconButton
                     color="primary"
